@@ -3,6 +3,11 @@ import math, sys
 def rect_v(x0,x1,y0,y1,cut=10):   # vertical stem, bottom slanted: left lower
     return f"M{x0},{y0} L{x1},{y0} L{x1},{y1-cut} L{x0},{y1+cut*0.0} Z" if False else \
            f"M{x0},{y0} L{x1},{y0} L{x1},{y1-cut} L{x0},{y1} Z"
+def stem_flag(x0,x1,y0,y1,cut=10,f=20,fh=30):   # vertical stem whose top flicks to the left
+    return (f"M{x0-f},{y0} L{x1},{y0} L{x1},{y1-cut} L{x0},{y1} L{x0},{y0+fh} "
+            f"Q{x0},{y0+fh*0.25} {x0-f},{y0} Z")
+def stem_flagR(x0,x1,y0,y1,f=24,fh=34):     # top stub flicking to the right (ㅅ head)
+    return (f"M{x0},{y0} L{x1+f},{y0} Q{x1},{y0+fh*0.25} {x1},{y0+fh} L{x1},{y1} L{x0},{y1} Z")
 def rect_h(x0,x1,y0,y1,r=0):      # horizontal bar, right end softly rounded
     if not r: return f"M{x0},{y0} L{x1},{y0} L{x1},{y1} L{x0},{y1} Z"
     return f"M{x0},{y0} L{x1-r},{y0} Q{x1},{y0} {x1},{(y0+y1)/2} Q{x1},{y1} {x1-r},{y1} L{x0},{y1} Z"
@@ -27,25 +32,25 @@ P=dict(V=V,H=H)
 def glyphs(V=V,H=H,C=C,T=27,TT=18):
     g=[]
     # 고
-    g.append(rect_h(28,200+V/2,72,72+H))
-    g.append(curve((200,72),(201,150),(188,214),V,V-2))           # ㄱ vertical, slight left bend
-    g.append(rect_v(95,95+V-2,163,268))                          # ㅗ stub
+    g.append(rect_h(28,206+V/2,72,72+H))
+    g.append(curve((205,72),(208,150),(199,214),V+2,V))           # ㄱ vertical, slight left bend
+    g.append(stem_flag(95,95+V-2,163,268,0,f=10,fh=18))                          # ㅗ stub
     g.append(rect_h(6,248,266,266+H,r=8))                          # ㅗ base
     # 수
-    g.append(rect_h(376,376+V-2,60,98))                            # ㅅ top stub (merged)
-    g.append(curve((386,92),(362,148),(290,174),V-2,H-3))          # ㅅ left sweep
+    g.append(stem_flagR(376,376+V-2,60,98))                            # ㅅ top stub (merged)
+    g.append(curve((388,92),(366,150),(292,178),V,H-1))          # ㅅ left sweep
     g.append(curve((390,100),(425,140),(505,168),H+2,H-6))         # ㅅ right
     g.append(rect_h(276,530,204,204+H,r=8))                        # ㅜ bar
-    g.append(rect_v(388,388+V,204+H-2,320,C))                      # ㅜ stem
+    g.append(rect_v(391,391+V,204+H-2,320,C))                      # ㅜ stem
     # 영
-    g.append(ring(622,128,66,67,T,TT))
-    g.append(rect_h(684,752,101,101+H-2)); g.append(rect_h(684,752,150,150+H-2))
-    g.append(rect_v(748,748+V,50,200,C))
+    g.append(ring(620,123,66,62,T,TT))
+    g.append(rect_h(684,750,91,91+H-2)); g.append(rect_h(684,750,138,138+H-2))
+    g.append(stem_flag(745,745+V+2,50,200,C))
     g.append(ring(697,262,68,56,T,TT))
     # 어
-    g.append(ring(879,147,64,76,T,TT))
-    g.append(rect_h(936,1016,132,132+H))
-    g.append(rect_v(1012,1012+V,50,322,C))
+    g.append(ring(886,146,72,75,T+2,TT))
+    g.append(rect_h(950,1016,134,134+H))
+    g.append(stem_flag(1008,1008+V+2,50,322,C))
     return g
 if __name__=="__main__":
     col=sys.argv[2] if len(sys.argv)>2 else "#666"
