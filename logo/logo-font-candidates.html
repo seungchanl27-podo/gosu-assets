@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="ko"><head><meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>고수영어 로고 폰트 시안</title>
+<link href="https://fonts.googleapis.com/css2?family=Hahmlet:wght@700;800&family=Song+Myung&family=Nanum+Myeongjo:wght@800&family=Noto+Serif+KR:wght@900&family=Diphylleia&family=Gowun+Batang:wght@700&family=Black+Han+Sans&family=Orbit&family=IBM+Plex+Sans+KR:wght@700&family=Gothic+A1:wght@800&family=Pretendard&display=block" rel="stylesheet">
+<style>
+:root{--green:#173f2c;--gold:#c9a35a;--cream:#efe8d8;--ink:#14231b}
+*{box-sizing:border-box}
+body{margin:0;background:#f6f3ec;font-family:'IBM Plex Sans KR',sans-serif;color:var(--ink);padding:40px}
+h1{font-size:22px;margin:0 0 6px}
+p.sub{margin:0 0 28px;color:#5b665f;font-size:14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:18px}
+.card{border-radius:10px;overflow:hidden;border:1px solid #ddd5c3;background:#fff}
+.pair{display:grid;grid-template-columns:1fr 1fr}
+.dark{background:var(--green);color:var(--cream)}
+.light{background:var(--cream);color:var(--green)}
+.logo{height:150px;display:flex;align-items:center;justify-content:center;font-size:58px;letter-spacing:.02em;gap:.18em}
+.logo .b{color:var(--gold)}
+.light .logo .b{color:#a8853f}
+.meta{padding:10px 14px;font-size:13px;display:flex;justify-content:space-between;background:#fff}
+.meta b{font-size:14px}
+.tag{color:#7a6a45}
+.rec{outline:3px solid var(--gold);outline-offset:-3px}
+</style></head><body>
+<h1>고수영어 로고 폰트 시안 — 날카롭고 단정한 한글</h1>
+<p class="sub">‘고수’ 골드 + ‘영어’ 크림 / 딥그린 배경 · 크림 배경 비교 · ★ = 추천</p>
+<div class="grid" id="g"></div>
+<script>
+const F=[
+ ["A","Hahmlet",800,"함렛 ExtraBold","세리프 끝이 칼처럼 각진 현대 명조 ★",1],
+ ["B","Song Myung",400,"송명","붓끝이 날카로운 전통 명조 ★",1],
+ ["C","Nanum Myeongjo",800,"나눔명조 ExtraBold","단정·정석적인 명조",0],
+ ["D","Noto Serif KR",900,"본명조 Black","무게감 있는 교과서 명조",0],
+ ["E","Diphylleia",400,"디필레이아","가늘고 예리한 헤어라인 세리프",0],
+ ["F","Gowun Batang",700,"고운바탕 Bold","부드럽지만 정돈된 바탕",0],
+ ["G","Black Han Sans",400,"검은고딕","각진 직선, 강한 임팩트",0],
+ ["H","IBM Plex Sans KR",700,"IBM Plex Sans KR Bold","기계적으로 단정한 고딕 ★",1],
+ ["I","Gothic A1",800,"Gothic A1 ExtraBold","깔끔한 표준 고딕",0],
+ ["J","Orbit",400,"오르빗","기하학적·테크 느낌",0],
+];
+const g=document.getElementById('g');
+for(const [id,fam,w,name,desc,rec] of F){
+ const s=`font-family:'${fam}';font-weight:${w}`;
+ g.insertAdjacentHTML('beforeend',`<div class="card ${rec?'rec':''}"><div class="pair">
+ <div class="dark"><div class="logo" style="${s}"><span class="b">고수</span><span>영어</span></div></div>
+ <div class="light"><div class="logo" style="${s}"><span class="b">고수</span><span>영어</span></div></div></div>
+ <div class="meta"><span><b>${id}. ${name}</b> &nbsp;<span class="tag">${desc}</span></span><span>${fam} ${w}</span></div></div>`);
+}
+</script></body></html>
