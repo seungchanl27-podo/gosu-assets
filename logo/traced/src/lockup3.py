@@ -22,17 +22,17 @@ def en(path,text,size,track):
             p=SVGPathPen(gs); g.draw(TransformPen(p,(s,0,0,-s,dx+X,base))); o.append(p.getCommands())
         return " ".join(o)
     return r-l,l,top,draw
-pad=430 if bg else 40
+K=ww/4160; pad=(430 if bg else 40)*K
 s=[]
 if mode=="word":
     W=ww+2*pad; H=wh+2*pad
     s.append(f'<path fill="{c1}" fill-rule="evenodd" transform="translate({pad-x},{pad-y})" d="{J["d"]}"/>')
 else:
-    ew,el,et,draw=en(S+"/f2/Montserrat-500.ttf","GOSU ENGLISH",245,0.42)
-    W=max(ww,ew)+2*pad; cx=W/2; rule_y=pad+wh+230; base=rule_y+200+et; H=base+pad
+    ew,el,et,draw=en(S+"/f2/Montserrat-500.ttf","GOSU ENGLISH",245*K,0.42)
+    W=max(ww,ew)+2*pad; cx=W/2; rule_y=pad+wh+230*K; base=rule_y+200*K+et; H=base+pad
     s.append(f'<path fill="{c1}" fill-rule="evenodd" transform="translate({cx-ww/2-x},{pad-y})" d="{J["d"]}"/>')
-    s.append(f'<rect x="{cx-430}" y="{rule_y}" width="860" height="14" fill="{c2}"/>')
+    s.append(f'<rect x="{cx-430*K}" y="{rule_y}" width="{860*K}" height="{14*K}" fill="{c2}"/>')
     s.append(f'<path fill="{c2}" d="{draw(cx-ew/2-el,base)}"/>')
-hdr=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.0f} {H:.0f}" width="{W/8:.0f}" height="{H/8:.0f}">'
-if bg: hdr+=f'<rect x="-4" y="-4" width="{W+8:.0f}" height="{H+8:.0f}" fill="{bg}"/>'
+hdr=f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W:.0f} {H:.0f}" width="{W/8/K:.0f}" height="{H/8/K:.0f}">'
+if bg: hdr+=f'<rect x="-8" y="-8" width="{W+16:.0f}" height="{H+16:.0f}" fill="{bg}"/>'
 open(out,"w").write(hdr+"".join(s)+"</svg>")
